@@ -1,0 +1,56 @@
+class Solution {
+    public int[] sortedSquares(int[] A) {
+        int[] outputArr = new int[A.length];
+        int lptr = -1;
+        int rptr = -1;
+        for (int i = 0; i < A.length; i++) { // iteration to assign pointers
+            boolean wasAssigned = false;;
+            if (A[i] >= 0) {
+                rptr = i;
+                wasAssigned = true;
+            }
+            if (i > 0) {
+                lptr = i - 1;
+            }
+            if (wasAssigned) {
+                break;
+            }
+        }
+        int q = 0;
+        if (rptr == -1 || lptr == -1){
+            if (A[0] < 0) {
+                for (int j = outputArr.length - 1; j >= 0; j--) { // reverse iterate
+                    outputArr[j + 1 - outputArr.length] = A[j] * A[j];
+                }
+            }
+            else {
+                for (int j = 0; j < outputArr.length; j++) {
+                    outputArr[j] = A[j] * A[j];
+                }
+            }
+            return outputArr;
+        }
+        while (lptr >= 0 && rptr < A.length && rptr != -1) {
+            if (A[rptr] < Math.abs(A[lptr])) {
+                outputArr[q] = A[rptr] * A[rptr];
+                rptr++;
+            }
+            else {
+                outputArr[q] = A[lptr] * A[lptr];
+                lptr--;
+            }
+            q++;
+        }
+        while (lptr >= 0) {
+            outputArr[q] = A[lptr] * A[lptr];
+            lptr--;
+            q++;
+        }
+        while (rptr < A.length) {
+            outputArr[q] = A[rptr] * A[rptr];
+            rptr++;
+            q++;
+        }
+        return outputArr;
+    }
+}
