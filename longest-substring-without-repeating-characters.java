@@ -15,11 +15,16 @@ class Solution {
                 indexCounter++;
             }
             else {
-                if (indexCounter > globMax) globMax = indexCounter;
+                queue.add(arr[i]);
+                if (indexCounter > globMax) {
+                    globMax = indexCounter;
+                }
                 int oopsIndex = hash.get(arr[i]);
-                while (queue.peekFirst() != arr[i]) {
+                while (!queue.peek().equals(arr[i])) {
                     hash.remove(queue.remove());
                 }
+                hash.remove(queue.remove());
+                hash.put(arr[i], i);
                 indexCounter = i - oopsIndex;
             }     
         }
